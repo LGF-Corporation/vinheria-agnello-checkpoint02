@@ -1,117 +1,81 @@
-// Temos que usar essas tags aqui:
-// prompt();
-// alert();
-// console.log();
+// // Galera: [ Requisitos do Sistema ] ===============================================================================================
+// O sistema deve funcionar via prompt() e alert() como no CP01.   [OK] < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
+// Reaproveite a ideia de cadastro de vinhos, mas agora:
+// Permita o cadastro de vários vinhos em sequência, perguntando ao final se deseja cadastrar outro.       [OK] < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
+// Crie funções reutilizáveis: <-----------------------------------------------------
+// Para validar entradas                                      [A FAZER]
+// Para verificar se o estoque está baixo (menos de 5)        [A FAZER]
+// Para classificar o vinho (jovem, amadurecido, antigo)      [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
+// Para mostrar os dados no console com aviso por alert()     [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
+// Evite repetir código: funções são obrigatórias. 
+// Escopo deve ser respeitado: 
+// Variáveis declaradas dentro das funções devem ser usadas localmente
+// Ao final, exiba: <-----------------------------------------------------
+// Quantos cadastros foram feitos                            [A FAZER]
+// Quantos vinhos têm estoque baixo                          [A FAZER]                     
+// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [A FAZER]
+// ⚠️ Não é permitido usar arrays nem objetos!
+// Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
+
+
 // Mensagem inicial: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-var nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    //alterado
+let nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    
 
 
 // Mensagem de cadastro realizado >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-alert("Olá, " + nome + "! Cadastro realizado com sucesso! Veja os detalhes no Console.");  //mantido
+alert("Olá, " + nome + "! Cadastro realizado com sucesso! Veja os detalhes no Console.");  
 
-// Lógica para Cadastro ods vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Lógica para Cadastro dos vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-function solicitaVinho() {
+function solicitaVinho() {            //   Criando uma função para usarmos depois 
     let tipoVinho = prompt('Qual tipo de vinho você deseja cadastrar? (Tinto, Branco ou Rosé)')
-    let safraVinho = prompt('Qual a safra do vinho?')
+    let safraVinho = parseInt(prompt('Qual a safra do vinho?'))
     let qtdEstoque = prompt('Qual a quantidade em estoque?')
 
+    mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
+
+}
+
+solicitaVinho();                //    Aqui é pra chamar a função criada para solicitar os dados ao administrador
+let cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não'); 
+
+while (cadastrarOutro == '1') {             //  Aqui é pra permitir que o usuário decida cadastrar mais vinhos ou não 
+    solicitaVinho();
+    cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não');
+}
+
+// Classificação do vinho (jovem, amadurecido e antigo) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function classifVinho(safraVinho) {
+    const hoje = new Date();
+    const anoAtual = hoje.getFullYear();
+    let subit = anoAtual - safraVinho;     //  subtração do ano atual pela safra do vinho para determinar a idade do vinho 
+
+    // Dados fictícios, já que não sabemos a classificação real de idades, supus que poderiam ser esses valores -----------------------
+    if (subit <= 5) {              // Explicação: Se for menor ou igual a 5 classificaremos como jovem
+        return "Jovem";
+    } else if (subit >= 6 && subit <= 12) {       // Explic: se for entre 6 e 12 classificaremos como amadurecido
+        return "Amadurecido";
+    } else {
+        return "Antigo";           // Explic: se for diferente dos casos anteriores, classificaremos como antigo
+    }
+}
+
+// Criando função para mostrar dados no console por alert 
+
+function mostraDados(tipoVinho, safraVinho, qtdEstoque, classificacao) {
     console.log('Tipo de vinho: ' + tipoVinho);
     console.log('Safra do vinho: ' + safraVinho);
     console.log('Quantidade em estoque: ' + qtdEstoque);
+    console.log('Classificação: ' + classificacao);
     console.log('--------------------------------');
-}
 
+    alert(
+        'Tipo de vinho: ' + tipoVinho + '\n' +
+        'Safra do vinho: ' + safraVinho + '\n' +
+        'Quantidade em estoque: ' + qtdEstoque + '\n' +
+        'Classificação: ' + classificacao
+    )
+} 
 
-solicitaVinho();
-var cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não)');
-
-while (cadastrarOutro == '1') {
-    solicitaVinho();
-    cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não)');
-}
-
-
-
-
-// Lógica de busca interativa >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-// var tipo = prompt("Dentre as opções de vinhos: Tinto, Branco ou Rosé, qual é o tipo de vinho que você está procurando?")
-//            .toLowerCase()                       
-//            .normalize("NFD")                    
-//            .replace(/[\u0300-\u036f]/g, "");    
-
-// if (tipo === "tinto") {
-//     alert("Há " + totalTinto + " unidades deste tipo de vinho. Veja os detalhes no Console!");
-    
-//     console.clear(); 
-//     console.log("--- RELATÓRIO DETALHADO: VINHOS TINTOS ---");
-//     console.log("Total Geral: " + totalTinto);
-//     console.log("------------------------------------------");
-//     console.log("ESTOQUE POR SAFRA:");
-//     console.log("Safra 2025: " + totTintSaf2025);
-//     console.log("Safra 2024: " + totTintSaf2024);
-//     console.log("Safra 2023: " + totTintSaf2023);
-//     console.log("------------------------------------------");
-//     console.log("DETALHES POR MARCA:");
-    
-//     console.log("Casillero del Diablo - Safra 2024: " + casiDD2024);
-//     console.log("Casillero del Diablo - Safra 2023: " + casiDD2023);
-    
-//     console.log("Pauliteiros - Safra 2025: " + paulit2025);
-//     console.log("Pauliteiros - Safra 2024: " + paulit2024);
-//     console.log("Pauliteiros - Safra 2023: " + paulit2023);
-    
-//     console.log("Casal Garcia - Safra 2023: " + casalG2023);
-    
-//     console.log("Garibaldi - Safra 2025: " + gariB2025);
-//     console.log("Garibaldi - Safra 2024: " + gariB2024);
-//     console.log("Garibaldi - Safra 2023: " + gariB2023);
-// }
-
-
-// else if (tipo === "branco") {
-//     alert("Há " + totalBranco + " unidades deste tipo de vinho. Veja os detalhes no Console!");
-    
-//     console.clear();
-//     console.log("--- RELATÓRIO DETALHADO: VINHOS BRANCOS ---");
-//     console.log("Total Geral: " + totalBranco);
-//     console.log("-------------------------------------------");
-//     console.log("ESTOQUE POR SAFRA:");
-//     console.log("Safra 2025: " + totBranSaf2025);
-//     console.log("Safra 2024: " + totBranSaf2024);
-//     console.log("-------------------------------------------");
-//     console.log("DETALHES POR MARCA:");
-//     console.log("Casillero del Diablo - Safra 2025: " + casiDDBran2025);
-//     console.log("Casillero del Diablo - Safra 2024: " + casiDDBran2024);
-//     console.log("Casal Garcia - Safra 2025: " + casalGBran2025);
-//     console.log("Casal Garcia - Safra 2024: " + casalGBran2024);
-// } 
-
-// else if (tipo === "rose") {
-//     alert("Há " + totalRose + " unidades deste tipo de vinho. Veja os detalhes no Console!");
-    
-//     console.clear();
-//     console.log("--- RELATÓRIO DETALHADO: VINHOS ROSÉS ---");
-//     console.log("Total Geral: " + totalRose);
-//     console.log("------------------------------------------");
-//     console.log("ESTOQUE POR SAFRA:");
-//     console.log("Safra 2025: " + totRoseSaf2025);
-//     console.log("Safra 2024: " + totRoseSaf2024);
-//     console.log("Safra 2023: " + totRoseSaf2023);
-//     console.log("------------------------------------------");
-//     console.log("DETALHES POR MARCA:");
-//     console.log("Casillero del Diablo - Safra 2025: " + casiDDRose2025);
-//     console.log("Casillero del Diablo - Safra 2024: " + casiDDRose2024);
-//     console.log("Casillero del Diablo - Safra 2023: " + casiDDRose2023);
-//     console.log("Casal Garcia - Safra 2025: " + casalGRose2025);
-//     console.log("Casal Garcia - Safra 2024: " + casalGRose2024);
-//     console.log("Casal Garcia - Safra 2023: " + casalGRose2023);
-// } 
-
-// else {
-//     alert("Tipo de vinho não encontrado. Tente Tinto, Branco ou Rosé.");
-// }
