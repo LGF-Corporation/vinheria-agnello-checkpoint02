@@ -11,48 +11,45 @@
 // Escopo deve ser respeitado: 
 // Variáveis declaradas dentro das funções devem ser usadas localmente
 // Ao final, exiba: <-----------------------------------------------------
-// Quantos cadastros foram feitos                            [OK]     <---- Meninas, verifiquem isso please -- Flá 
-// Quantos vinhos têm estoque baixo                          [OK]     <---- Meninas, verifiquem isso please -- Flá                 
-// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [OK]     <---- Meninas, verifiquem isso please -- Flá
+// Quantos cadastros foram feitos                            [A FAZER]
+// Quantos vinhos têm estoque baixo                          [A FAZER]                     
+// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [A FAZER]
 // ⚠️ Não é permitido usar arrays nem objetos!
 // Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
 
-// Variaveis de Controle: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
-
-let totalCadastros = 0; 
-let totalEstoqueBaixo = 0; 
-let safraMaisAntiga = 9999; // logica: iniciar com um valor alto para que a primeira safra digitada vire a referencia
-let nomeVinhoMaisAntigo = "";
 
 // Mensagem inicial: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 let nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    
-
-// Mensagem de cadastro realizado >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+while (nome === "" || nome === null || /[0-9]/.test(nome)) {
+    nome = prompt("Nome inválido! Por favor, use apenas letras e não deixe o campo vazio:");
+}
 
 alert("Olá, " + nome + "! Cadastro realizado com sucesso! Veja os detalhes no Console.");  
 
 // Lógica para Cadastro dos vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 function solicitaVinho() {            //   Criando uma função para usarmos depois 
-    let tipoVinho = prompt('Qual tipo de vinho você deseja cadastrar? (Tinto, Branco ou Rosé)')
+    let tipoVinho = prompt('Qual tipo de vinho você deseja cadastrar? (Tinto, Branco ou Rosé)');
+
+    let validaTipo = (tipoVinho || "").toLowerCase().trim();
+
+    while (validaTipo !== "tinto" && validaTipo !== "branco" && validaTipo !== "rosé" && validaTipo !== "rose") {
+        tipoVinho = prompt("OPÇÃO INVÁLIDA!\nDigite apenas: Tinto, Branco ou Rosé");
+        validaTipo = (tipoVinho || "").toLowerCase().trim();
+}
     let safraVinho = parseInt(prompt('Qual a safra do vinho?'))
+    while (safraVinho === "" || safraVinho === null || /[A-Z and a-z]/.test(safraVinho) || safraVinho > 2026) {
+    safraVinho = prompt("Safra inválida! Por favor, use apenas números e não deixe o campo vazio:");
+}
+
     let qtdEstoque = prompt('Qual a quantidade em estoque?')
-
-    totalCadastros++; // contador de cadastros 
-
-    // Contando vinhos com estoque baixo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    if (parseInt(qtdEstoque) < 5) {
-        totalEstoqueBaixo++;
-    }
-
-    // Comparando a safra mais antiga >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    if (safraVinho < safraMaisAntiga) {
-        safraMaisAntiga = safraVinho;
-        nomeVinhoMaisAntigo = tipoVinho;
-    }
+    while (qtdEstoque === "" || qtdEstoque === null || /[A-Z and a-z]/.test(qtdEstoque)) {
+    qtdEstoque = prompt("Quantidade inválida! Por favor, use apenas números e não deixe o campo vazio:");
+}
 
     mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
+
 }
 
 solicitaVinho();                //    Aqui é pra chamar a função criada para solicitar os dados ao administrador
@@ -78,16 +75,6 @@ function classifVinho(safraVinho) {
         return "Antigo";           // Explic: se for diferente dos casos anteriores, classificaremos como antigo
     }
 }
-
-// Relatorio final de controle dos vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-alert(
-    "--- RELATÓRIO FINAL DA VINHERIA ---\n" +
-    "Total de cadastros realizados: " + totalCadastros + "\n" +
-    "Vinhos com estoque baixo: " + totalEstoqueBaixo + "\n" +
-    "Vinho mais antigo: " + nomeVinhoMaisAntigo + " (" + safraMaisAntiga + ")"
-);
-
-
 
 // Criando função para mostrar dados no console por alert 
 
