@@ -11,17 +11,18 @@
 // Escopo deve ser respeitado: 
 // Variáveis declaradas dentro das funções devem ser usadas localmente
 // Ao final, exiba: <-----------------------------------------------------
-// Quantos cadastros foram feitos                            [A FAZER]
+// Quantos cadastros foram feitos                            [OK]     <---- Meninas, verifiquem isso please -- Flá 
 // Quantos vinhos têm estoque baixo                          [A FAZER]                     
 // O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [A FAZER]
 // ⚠️ Não é permitido usar arrays nem objetos!
 // Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
 
 
+let totalCadastros = 0; 
+
 // Mensagem inicial: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 let nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    
-
 
 // Mensagem de cadastro realizado >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -34,8 +35,9 @@ function solicitaVinho() {            //   Criando uma função para usarmos dep
     let safraVinho = parseInt(prompt('Qual a safra do vinho?'))
     let qtdEstoque = prompt('Qual a quantidade em estoque?')
 
-    mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
+    totalCadastros++; // contador de cadastros 
 
+    mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
 }
 
 solicitaVinho();                //    Aqui é pra chamar a função criada para solicitar os dados ao administrador
