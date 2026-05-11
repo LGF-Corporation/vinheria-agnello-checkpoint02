@@ -3,62 +3,90 @@
 // Reaproveite a ideia de cadastro de vinhos, mas agora:
 // Permita o cadastro de vários vinhos em sequência, perguntando ao final se deseja cadastrar outro.       [OK] < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
 // Crie funções reutilizáveis: <-----------------------------------------------------
-// Para validar entradas                                      [A FAZER]
-// Para verificar se o estoque está baixo (menos de 5)        [A FAZER]
+// Para validar entradas                                      [ok - Laura]
+// Para verificar se o estoque está baixo (menos de 5)        [ok - Laura]
 // Para classificar o vinho (jovem, amadurecido, antigo)      [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
 // Para mostrar os dados no console com aviso por alert()     [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
 // Evite repetir código: funções são obrigatórias. 
 // Escopo deve ser respeitado: 
 // Variáveis declaradas dentro das funções devem ser usadas localmente
 // Ao final, exiba: <-----------------------------------------------------
-// Quantos cadastros foram feitos                            [A FAZER]
-// Quantos vinhos têm estoque baixo                          [A FAZER]                     
-// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [A FAZER]
+// Quantos cadastros foram feitos                            [ok - Laura]
+// Quantos vinhos têm estoque baixo                          [ok - Flávia]  <---- Meninas, verifiquem isso please -- Flá                     
+// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [ok - Flávia] <---- Meninas, verifiquem isso please -- Flá  
 // ⚠️ Não é permitido usar arrays nem objetos!
 // Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
 
 
+// Variaveis de Controle: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
+
+let totalCadastros = 0; 
+let totalEstoqueBaixo = 0; 
+let safraMaisAntiga = 9999; // logica: iniciar com um valor alto para que a primeira safra digitada vire a referencia
+let nomeVinhoMaisAntigo = "";
+
 // Mensagem inicial: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-let nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    
-while (nome === "" || nome === null || /[0-9]/.test(nome)) {
-    nome = prompt("Nome inválido! Por favor, use apenas letras e não deixe o campo vazio:");
-}
+window.onload = function() {
+    
+    // Agora sim, começamos os prompts
+    let nome = prompt("Bem-vindo(a) de volta. Por favor insira o seu nome: ");    
+    while (nome === "" || nome === null || /[0-9]/.test(nome)) {
+        nome = prompt("Nome inválido! Por favor, use apenas letras:");
+    }
+
+// Mensagem de cadastro realizado >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 alert("Olá, " + nome + "! Cadastro realizado com sucesso! Veja os detalhes no Console.");  
 
 // Lógica para Cadastro dos vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-function solicitaVinho() {            //   Criando uma função para usarmos depois 
+function solicitaVinho() {
     let tipoVinho = prompt('Qual tipo de vinho você deseja cadastrar? (Tinto, Branco ou Rosé)');
-
     let validaTipo = (tipoVinho || "").toLowerCase().trim();
 
     while (validaTipo !== "tinto" && validaTipo !== "branco" && validaTipo !== "rosé" && validaTipo !== "rose") {
         tipoVinho = prompt("OPÇÃO INVÁLIDA!\nDigite apenas: Tinto, Branco ou Rosé");
         validaTipo = (tipoVinho || "").toLowerCase().trim();
-}
-    let safraVinho = parseInt(prompt('Qual a safra do vinho?'))
-    while (safraVinho === "" || safraVinho === null || /[A-Z and a-z]/.test(safraVinho) || safraVinho > 2026) {
-    safraVinho = prompt("Safra inválida! Por favor, use apenas números e não deixe o campo vazio:");
-}
+    }
 
-    let qtdEstoque = prompt('Qual a quantidade em estoque?')
-    while (qtdEstoque === "" || qtdEstoque === null || /[A-Z and a-z]/.test(qtdEstoque)) {
-    qtdEstoque = prompt("Quantidade inválida! Por favor, use apenas números e não deixe o campo vazio:");
-}
+    let safraInput = prompt('Qual a safra do vinho?');
+    while (safraInput === "" || safraInput === null || isNaN(safraInput) || parseInt(safraInput) > 2026) {
+        safraInput = prompt("Safra inválida! Digite apenas números até 2026:");
+    }
+    let safraVinho = parseInt(safraInput);
 
-    mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
+    let qtdInput = prompt('Qual a quantidade em estoque?');
+    while (qtdInput === "" || qtdInput === null || isNaN(qtdInput)) {
+        qtdInput = prompt("Quantidade inválida! Digite apenas números:");
+    }
+    let qtdEstoque = parseInt(qtdInput); // Criamos a variável numérica aqui
 
-}
+    totalCadastros++; 
 
-solicitaVinho();                //    Aqui é pra chamar a função criada para solicitar os dados ao administrador
+    let resultadoStatus = statusEstoque(qtdEstoque); 
+
+    // Comparando a safra mais antiga
+    if (safraVinho < safraMaisAntiga) {
+        safraMaisAntiga = safraVinho;
+        nomeVinhoMaisAntigo = tipoVinho;
+    }
+
+    mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho), resultadoStatus); 
+}    //  função de mostrar os dados no console e alert 
+solicitaVinho();                //    Aqui é pra chamar a função criada para solicitar os dados do adm
 let cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não'); 
 
 while (cadastrarOutro == '1') {             //  Aqui é pra permitir que o usuário decida cadastrar mais vinhos ou não 
     solicitaVinho();
     cadastrarOutro = prompt('Deseja cadastrar outro vinho? \n 1 - Sim \n 2 - Não');
 }
+alert(
+    "--- RELATÓRIO FINAL DA VINHERIA ---\n" +
+    "Total de cadastros realizados: " + totalCadastros + "\n" +
+    "Vinhos com estoque baixo: " + totalEstoqueBaixo + "\n" +
+    "Vinho mais antigo: " + nomeVinhoMaisAntigo + " (" + (safraMaisAntiga === 9999 ? "N/A" : safraMaisAntiga) + ")"
+);
 
 // Classificação do vinho (jovem, amadurecido e antigo) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function classifVinho(safraVinho) {
@@ -75,21 +103,35 @@ function classifVinho(safraVinho) {
         return "Antigo";           // Explic: se for diferente dos casos anteriores, classificaremos como antigo
     }
 }
+function statusEstoque(qtdEstoque) {
+    let qtd = parseInt(qtdEstoque); 
+
+   
+    if (qtd <= 5) {
+        totalEstoqueBaixo++; 
+        return "Estoque Baixo!!";
+    } else if (qtd <= 20) {
+        return "Estoque Normal";
+    } else {
+        return "Estoque Alto";
+    }
+}
 
 // Criando função para mostrar dados no console por alert 
+ 
 
-function mostraDados(tipoVinho, safraVinho, qtdEstoque, classificacao) {
+function mostraDados(tipoVinho, safraVinho, qtdEstoque, classificacao, resultadoStatus) {
+    console.log('------Cadastros------')
     console.log('Tipo de vinho: ' + tipoVinho);
     console.log('Safra do vinho: ' + safraVinho);
-    console.log('Quantidade em estoque: ' + qtdEstoque);
+    console.log('Quantidade em estoque: ' + qtdEstoque + ' - ' + resultadoStatus);
     console.log('Classificação: ' + classificacao);
     console.log('--------------------------------');
 
     alert(
         'Tipo de vinho: ' + tipoVinho + '\n' +
         'Safra do vinho: ' + safraVinho + '\n' +
-        'Quantidade em estoque: ' + qtdEstoque + '\n' +
+        'Quantidade em estoque: ' + qtdEstoque + ' (' + resultadoStatus + ')\n' + 
         'Classificação: ' + classificacao
-    )
-} 
-
+    );
+} }
