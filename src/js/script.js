@@ -12,13 +12,17 @@
 // Variáveis declaradas dentro das funções devem ser usadas localmente
 // Ao final, exiba: <-----------------------------------------------------
 // Quantos cadastros foram feitos                            [OK]     <---- Meninas, verifiquem isso please -- Flá 
-// Quantos vinhos têm estoque baixo                          [A FAZER]                     
-// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [A FAZER]
+// Quantos vinhos têm estoque baixo                          [OK]     <---- Meninas, verifiquem isso please -- Flá                 
+// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [OK]     <---- Meninas, verifiquem isso please -- Flá
 // ⚠️ Não é permitido usar arrays nem objetos!
 // Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
 
+// Variaveis de Controle: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 
 let totalCadastros = 0; 
+let totalEstoqueBaixo = 0; 
+let safraMaisAntiga = 9999; // logica: iniciar com um valor alto para que a primeira safra digitada vire a referencia
+let nomeVinhoMaisAntigo = "";
 
 // Mensagem inicial: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -36,6 +40,17 @@ function solicitaVinho() {            //   Criando uma função para usarmos dep
     let qtdEstoque = prompt('Qual a quantidade em estoque?')
 
     totalCadastros++; // contador de cadastros 
+
+    // Contando vinhos com estoque baixo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    if (parseInt(qtdEstoque) < 5) {
+        totalEstoqueBaixo++;
+    }
+
+    // Comparando a safra mais antiga >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    if (safraVinho < safraMaisAntiga) {
+        safraMaisAntiga = safraVinho;
+        nomeVinhoMaisAntigo = tipoVinho;
+    }
 
     mostraDados(tipoVinho, safraVinho, qtdEstoque, classifVinho(safraVinho));     //  função de mostrar os dados no console e alert 
 }
@@ -63,6 +78,16 @@ function classifVinho(safraVinho) {
         return "Antigo";           // Explic: se for diferente dos casos anteriores, classificaremos como antigo
     }
 }
+
+// Relatorio final de controle dos vinhos >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+alert(
+    "--- RELATÓRIO FINAL DA VINHERIA ---\n" +
+    "Total de cadastros realizados: " + totalCadastros + "\n" +
+    "Vinhos com estoque baixo: " + totalEstoqueBaixo + "\n" +
+    "Vinho mais antigo: " + nomeVinhoMaisAntigo + " (" + safraMaisAntiga + ")"
+);
+
+
 
 // Criando função para mostrar dados no console por alert 
 
