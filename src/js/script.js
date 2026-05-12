@@ -1,22 +1,3 @@
-// // Galera: [ Requisitos do Sistema ] ===============================================================================================
-// O sistema deve funcionar via prompt() e alert() como no CP01.   [OK] < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
-// Reaproveite a ideia de cadastro de vinhos, mas agora:
-// Permita o cadastro de vários vinhos em sequência, perguntando ao final se deseja cadastrar outro.       [OK] < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
-// Crie funções reutilizáveis: <-----------------------------------------------------
-// Para validar entradas                                      [ok - Laura]
-// Para verificar se o estoque está baixo (menos de 5)        [ok - Laura]
-// Para classificar o vinho (jovem, amadurecido, antigo)      [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
-// Para mostrar os dados no console com aviso por alert()     [OK]     < --- Verifiquem se concordam com a forma que eu fiz -- Gi 
-// Evite repetir código: funções são obrigatórias. 
-// Escopo deve ser respeitado: 
-// Variáveis declaradas dentro das funções devem ser usadas localmente
-// Ao final, exiba: <-----------------------------------------------------
-// Quantos cadastros foram feitos                            [ok - Laura]
-// Quantos vinhos têm estoque baixo                          [ok - Flávia]  <---- Meninas, verifiquem isso please -- Flá                     
-// O vinho com a safra mais antiga (comparando manualmente dentro das iterações)   [ok - Flávia] <---- Meninas, verifiquem isso please -- Flá  
-// ⚠️ Não é permitido usar arrays nem objetos!
-// Todas as informações devem ser armazenadas e manipuladas por variáveis únicas (ex: nome1, nome2, quant1, etc.)
-
 
 // Variaveis de Controle: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 
 

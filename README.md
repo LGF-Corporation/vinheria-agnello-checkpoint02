@@ -21,11 +21,29 @@ Este projeto consiste na criação de um e-commerce de uma Vinheria on-line, vis
 
 # Requisitos obrigatórios para o projeto de Web Development:
 
+## Checkpoint 01:
 - As informações devem ser solicitadas ao usuário usando prompt();
 - Após o cadastro, exiba um alert() informando: "Cadastro realizado! Veja os detalhes no console.";
 - Sempre que alguma informação for exibida no console, deve haver um alert() antes avisando o usuário, como por exemplo: "A seguir, veja os detalhes do vinho no console.";
 - Informações obrigatórias a serem coletadas: - Nome do vinho/ Tipo (Tinto, Branco, Rosé)/ Safra (ano)/ Quantidade em estoque;
 - Exiba todas as informações no console.log() de forma clara e organizada;
+## Checkpoint 02 (contém o que foi implementado): 
+- O sistema deve funcionar via prompt() e alert() como no CP01.
+- Reaproveite a ideia de cadastro de vinhos, mas agora:
+    Permita o cadastro de vários vinhos em sequência, perguntando ao final se deseja cadastrar outro.
+- Crie funções reutilizáveis:
+    Para validar entradas
+    Para verificar se o estoque está baixo (menos de 5)
+    Para classificar o vinho (jovem, amadurecido, antigo)
+    Para mostrar os dados no console com aviso por alert()
+- Evite repetir código: funções são obrigatórias.
+- Escopo deve ser respeitado:
+    Variáveis declaradas dentro das funções devem ser usadas localmente
+    Ao final, exiba:
+        Quantos cadastros foram feitos
+        Quantos vinhos têm estoque baixo
+        O vinho com a safra mais antiga (comparando manualmente dentro das iterações)
+
 
 ## Sobre o projeto:
 
@@ -120,4 +138,4 @@ Criação de movimento e dinamismo através de `@keyframes` e propriedades de tr
 - Flavia Camerim de Sousa: [Git Hub](https://github.com/flacamerim)
 
 ## Link do site
-Veja o projeto funcionando aqui: [[link](https://lgf-corporation.github.io/VinheriaAgnello/index.html)]
+Veja o projeto funcionando aqui: [[link](https://lgf-corporation.github.io/vinheria-agnello-checkpoint02/index.html)]
